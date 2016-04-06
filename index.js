@@ -4,7 +4,7 @@ const ui =       require('cli-styles')
 const esc =      require('ansi-escapes')
 const chalk =    require('chalk')
 const figures =  require('figures')
-const keypress = require('keypress')
+const wrap =     require('prompt-skeleton')
 
 
 
@@ -12,7 +12,7 @@ const defaults = {
 	  in:      process.stdin
 	, out:     process.stdout
 
-	, hint:    'Space to select. Return to submit.'
+	, hint:    '– Space to select. Return to submit.'
 	, values:  []
 	, cursor:  0
 
@@ -24,77 +24,94 @@ const defaults = {
 
 const MultiselectPrompt = {
 
-	  selected: function () {
-		return this.values.filter((v) => v.selected)
+	  reset: function () {
+		for (let v of this.value) v.selected = false
+		this.cursor = 0
+		this.emit()
+		this.render()
 	}
 
-	, reset: function () {
-		this.cursor = 0
-		for (let v of this.values) v.selected = false
+	, selected: function () {
+		return this.value.filter((v) => v.selected)
 	}
 
 	, abort: function () {
 		this.done = this.aborted = true
+		this.emit()
 		this.render()
-		this._end()
 		this.out.write('\n')
-		this._reject()
+		this.close()
 	}
 
 	, submit: function () {
 		this.done = true
 		this.aborted = false
+		this.emit()
 		this.render()
-		this._end()
 		this.out.write('\n')
-		this._resolve(this.selected().map((v) => v.value))
+		this.close()
 	}
 
 
 
-	, left: function () {
-		this.values[this.cursor].selected = false
+	, first: function () {
+		this.cursor = 0
 		this.render()
 	}
-	, right: function () {
-		this.values[this.cursor].selected = true
-		this.render()
-	}
-	, ' ': function () {
-		const v = this.values[this.cursor]
-		v.selected = !v.selected
+	, last: function () {
+		this.cursor = this.value.length - 1
 		this.render()
 	}
 
 	, up: function () {
-		this.cursor = --this.cursor % this.values.length
+		const l = this.value.length
+		this.cursor = (l + this.cursor - 1) % l
 		this.render()
 	}
 	, down: function () {
-		this.cursor = ++this.cursor % this.values.length
+		this.cursor = (this.cursor + 1) % this.value.length
+		this.render()
+	}
+
+	, left: function () {
+		this.value[this.cursor].selected = false
+		this.render()
+	}
+	, right: function () {
+		this.value[this.cursor].selected = true
+		this.render()
+	}
+
+	, _: function (c) { // on space key
+		if (c !== ' ') return this.bell()
+		const v = this.value[this.cursor]
+		v.selected = !v.selected
 		this.render()
 	}
 
 
 
-	, renderValue: function (v, i) {
-		return (v.selected ? chalk.green(figures.tick) : ' ')
-		+ ' '
-		+ (this.cursor === i ? chalk.cyan.underline(v.title) : v.title)
-	}
+	, render: function (first) {
+		if (first) this.out.write(esc.cursorHide)
+		else this.out.write(esc.eraseLines(this.value.length + 1))
 
-	, render: function () {
-		this.out.write(esc.eraseLines(this.values.length + 1) + [
+		this.out.write([
 			  ui.symbol(this.done, this.aborted)
-			, chalk.bold(this.msg), ui.delimiter, chalk.gray(this.hint)
-		].join(' ') + '\n'
-		+ this.values.map(this.renderValue.bind(this)).join('\n'))
+			, chalk.bold(this.msg)
+			, chalk.gray(this.hint)
+		].join(' ') + '\n')
+
+		const c = this.cursor
+		this.out.write(this.value.map((v, i) =>
+			(v.selected ? chalk.green(figures.tick) : ' ') + ' '
+			+ (c === i ? chalk.cyan.underline(v.title) : v.title)
+		).join('\n'))
 	}
 }
 
 
 
-const multiselectPrompt = (msg, values, opt) => new Promise((resolve, reject) => {
+const multiselectPrompt = (msg, values, opt) => {
 	if ('string' !== typeof msg) throw new Error('Message must be string.')
 	if (!Array.isArray(values)) throw new Error('Values must be in an array.')
 	if (Array.isArray(opt) || 'object' !== typeof opt) opt = {}
@@ -105,33 +122,12 @@ const multiselectPrompt = (msg, values, opt) => new Promise((resolve, reject) =>
 		return v
 	})
 
-	let prompt = Object.assign(Object.create(MultiselectPrompt), defaults, opt)
-	Object.assign(prompt, {
-		  msg, values
-		, _resolve:     resolve
-		, _reject:      reject
-	})
+	let p = Object.assign(Object.create(MultiselectPrompt), defaults, opt)
+	p.msg = msg
+	p.value = values // singular for compatibility with prompt-skeleton
 
-	const onKeypress = function (raw, key) {
-		let c = ui.keypress(raw, key)
-		if (prompt[c]) prompt[c]()
-		else prompt.out.write(esc.beep)
-	}
-	keypress(prompt.in)
-	prompt.in.on('keypress', onKeypress)
-
-	const oldRawMode = prompt.in.isRaw
-	prompt.in.setRawMode(true)
-	prompt.out.write('\n'.repeat(prompt.values.length) + esc.cursorHide)
-
-	prompt._end = () => {
-		prompt.in.removeListener('keypress', onKeypress)
-		prompt.in.setRawMode(oldRawMode)
-		prompt.out.write(esc.cursorShow)
-	}
-
-	prompt.render()
-})
+	return wrap(p)
+}
 
 
 
