@@ -2,7 +2,7 @@
 
 **A prompt to select zero or more items.**
 
-todo: asciicast
+[![asciicast](https://asciinema.org/a/41406.png)](https://asciinema.org/a/41406)
 
 [![npm version](https://img.shields.io/npm/v/multiselect-prompt.svg)](https://www.npmjs.com/package/multiselect-prompt)
 [![dependency status](https://img.shields.io/david/derhuerst/multiselect-prompt.svg)](https://david-dm.org/derhuerst/multiselect-prompt#info=dependencies)
