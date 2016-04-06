@@ -98,9 +98,11 @@ const multiselectPrompt = (msg, values, opt) => new Promise((resolve, reject) =>
 	if (!Array.isArray(values)) throw new Error('Values must be in an array.')
 	if (Array.isArray(opt) || 'object' !== typeof opt) opt = {}
 
-	values = values.map((v) => Object.assign(Object.create(v), {
-		selected: false
-	}))
+	values = values.map((v) => {
+		v = Object.create(v)
+		if (!('selected' in v)) v.selected = false
+		return v
+	})
 
 	let prompt = Object.assign(Object.create(MultiselectPrompt), defaults, opt)
 	Object.assign(prompt, {
