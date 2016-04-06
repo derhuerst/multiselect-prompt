@@ -12,6 +12,7 @@ const defaults = {
 	  in:      process.stdin
 	, out:     process.stdout
 
+	, hint:    'Space to select. Return to submit.'
 	, values:  []
 	, cursor:  0
 
@@ -85,7 +86,7 @@ const MultiselectPrompt = {
 	, render: function () {
 		this.out.write(esc.eraseLines(this.values.length + 1) + [
 			  ui.symbol(this.done, this.aborted)
-			, chalk.bold(this.msg), ui.delimiter
+			, chalk.bold(this.msg), ui.delimiter, chalk.gray(this.hint)
 		].join(' ') + '\n'
 		+ this.values.map(this.renderValue.bind(this)).join('\n'))
 	}
