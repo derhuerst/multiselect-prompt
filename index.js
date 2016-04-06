@@ -64,11 +64,16 @@ const MultiselectPrompt = {
 	}
 
 	, up: function () {
-		const l = this.value.length
-		this.cursor = (l + this.cursor - 1) % l
+		if (this.cursor === 0) return this.bell()
+		this.cursor--
 		this.render()
 	}
 	, down: function () {
+		if (this.cursor === (this.value.length - 1)) return this.bell()
+		this.cursor++
+		this.render()
+	}
+	, next: function () {
 		this.cursor = (this.cursor + 1) % this.value.length
 		this.render()
 	}
