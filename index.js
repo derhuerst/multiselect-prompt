@@ -8,22 +8,6 @@ const wrap =     require('prompt-skeleton')
 
 
 
-const defaults = {
-	  in:      process.stdin
-	, out:     process.stdout
-
-	, hint:    '– Space to select. Return to submit.'
-	, values:  []
-	, cursor:  0
-
-	, done:    false
-	, aborted: false
-
-	, maxChoices: Infinity
-}
-
-
-
 const MultiselectPrompt = {
 
 	  reset: function () {
@@ -129,6 +113,15 @@ const MultiselectPrompt = {
 }
 
 
+
+const defaults = {
+	  hint:    '– Space to select. Return to submit.'
+	, value:   []
+	, cursor:  0
+
+	, done:    false
+	, aborted: false
+}
 
 const multiselectPrompt = (msg, values, opt) => {
 	if ('string' !== typeof msg) throw new Error('Message must be string.')

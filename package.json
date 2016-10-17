@@ -1,7 +1,7 @@
 {
 	"name":              "multiselect-prompt",
 	"description":       "A prompt to select zero or more items.",
-	"version":           "0.2.0",
+	"version":           "0.3.0",
 	"main":              "index.js",
 	"files":             ["index.js"],
 	"keywords":          ["command", "line", "cli", "prompt", "select", "multiselect", "checkbox", "prompt"],
@@ -11,7 +11,7 @@
 	"license":           "ISC",
 	"engines":           {"node": ">=4"},
 	"dependencies": {
-		"cli-styles":      "^0.3",
+		"cli-styles":      "^0.4",
 		"ansi-escapes":    "^1.3",
 		"chalk":           "^1.1.1",
 		"figures":         "^1.4",
