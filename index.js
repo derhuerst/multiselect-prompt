@@ -18,6 +18,8 @@ const defaults = {
 
 	, done:    false
 	, aborted: false
+
+	, maxChoices: Infinity
 }
 
 
@@ -83,6 +85,9 @@ const MultiselectPrompt = {
 		this.render()
 	}
 	, right: function () {
+		if (this.value.filter (e => e.selected).length >= this.maxChoices)
+			return this.bell()
+
 		this.value[this.cursor].selected = true
 		this.render()
 	}
@@ -90,8 +95,17 @@ const MultiselectPrompt = {
 	, _: function (c) { // on space key
 		if (c !== ' ') return this.bell()
 		const v = this.value[this.cursor]
-		v.selected = !v.selected
-		this.render()
+
+		if (v.selected) {
+			v.selected = false
+			this.render()
+		}
+		else if (this.value.filter (e => e.selected).length >= this.maxChoices)
+			return this.bell()
+		else {
+			v.selected = true
+			this.render()
+		}
 	}
 
 
