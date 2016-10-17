@@ -33,11 +33,23 @@ const colors = [
 	{title: 'white',  value: '#fff'}
 ]
 
+const selected = (items) => items
+	.filter((item) => item.selected)
+	.map((item) => item.value)
+
 prompt('Which colors do you like?', colors)
-.on('abort', (e) => console.log('Interim value', e.value))
-.on('abort', (v) => console.log('Aborted with', v))
-.on('submit', (v) => console.log('Submitted with', v))
+.on('data', (data) => console.log('Changed to', selected(data.value)))
+.on('abort', (items) => console.log('Aborted with', selected(items)))
+.on('submit', (items) => console.log('Submitted with', selected(items)))
 ```
+
+
+## Related
+
+- [`date-prompt`](https://github.com/derhuerst/date-prompt)
+- [`number-prompt`](https://github.com/derhuerst/number-prompt)
+- [`select-prompt`](https://github.com/derhuerst/select-prompt)
+- [`text-prompt`](https://github.com/derhuerst/text-prompt)
 
 
 ## Contributing
