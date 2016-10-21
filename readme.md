@@ -54,10 +54,12 @@ prompt('Which colors do you like?', colors, opts)
 
 ## Related
 
+- [`mail-prompt`](https://github.com/derhuerst/mail-prompt)
 - [`date-prompt`](https://github.com/derhuerst/date-prompt)
 - [`number-prompt`](https://github.com/derhuerst/number-prompt)
 - [`select-prompt`](https://github.com/derhuerst/select-prompt)
 - [`text-prompt`](https://github.com/derhuerst/text-prompt)
+- [`cli-autocomplete`](https://github.com/derhuerst/cli-autocomplete)
 
 
 ## Contributing
