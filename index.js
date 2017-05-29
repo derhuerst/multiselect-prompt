@@ -94,21 +94,27 @@ const MultiselectPrompt = {
 
 
 
+	, lastRendered: ''
+
 	, render: function (first) {
 		if (first) this.out.write(esc.cursorHide)
-		else this.out.write(esc.eraseLines(this.value.length + 1))
 
-		this.out.write([
+		let prompt = [
 			  ui.symbol(this.done, this.aborted)
 			, chalk.bold(this.msg)
-			, chalk.gray(this.hint)
-		].join(' ') + '\n')
+			, this.done ? '' : chalk.gray(this.hint)
+		].join(' ')
 
-		const c = this.cursor
-		this.out.write(this.value.map((v, i) =>
-			(v.selected ? chalk.green(figures.tick) : ' ') + ' '
-			+ (c === i ? chalk.cyan.underline(v.title) : v.title)
-		).join('\n'))
+		if (!this.done) {
+			const c = this.cursor
+			prompt += '\n' + this.value.map((v, i) =>
+				(v.selected ? chalk.green(figures.tick) : ' ') + ' '
+				+ (c === i ? chalk.cyan.underline(v.title) : v.title)
+			).join('\n')
+		}
+
+		this.out.write(ui.clear(this.lastRendered) + prompt)
+		this.lastRendered = prompt
 	}
 }
 
