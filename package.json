@@ -1,15 +1,28 @@
 {
-	"name":              "multiselect-prompt",
-	"description":       "A prompt to select zero or more items.",
-	"version":           "0.3.0",
-	"main":              "index.js",
-	"files":             ["index.js"],
-	"keywords":          ["command", "line", "cli", "prompt", "select", "multiselect", "checkbox", "prompt"],
-	"author":            "Jannis R <mail@jannisr.de>",
-	"homepage":          "https://github.com/derhuerst/multiselect-prompt",
-	"repository":        "git://github.com/derhuerst/multiselect-prompt.git",
-	"license":           "ISC",
-	"engines":           {"node": ">=4"},
+	"name": "multiselect-prompt",
+	"description": "A prompt to select zero or more items.",
+	"version": "0.3.1",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"command",
+		"line",
+		"cli",
+		"prompt",
+		"select",
+		"multiselect",
+		"checkbox",
+		"prompt"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/multiselect-prompt",
+	"repository": "git://github.com/derhuerst/multiselect-prompt.git",
+	"license": "ISC",
+	"engines": {
+		"node": ">=4"
+	},
 	"dependencies": {
 		"ansi-escapes": "^2.0.0",
 		"chalk": "^1.1.3",

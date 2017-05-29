@@ -8,8 +8,9 @@
 [![dependency status](https://img.shields.io/david/derhuerst/multiselect-prompt.svg)](https://david-dm.org/derhuerst/multiselect-prompt#info=dependencies)
 [![dev dependency status](https://img.shields.io/david/dev/derhuerst/multiselect-prompt.svg)](https://david-dm.org/derhuerst/multiselect-prompt#info=devDependencies)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/multiselect-prompt.svg)
+[![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 
-*multiselect-prompt* uses [*cli-styles*](https://github.com/derhuerst/cli-styles) to have a look & feel consistent with other prompts.
+*multiselect-prompt* uses [*cli-styles*](https://github.com/derhuerst/cli-styles) and [*prompt-skeleton*](https://github.com/derhuerst/prompt-skeleton) to have a look & feel consistent with [other prompts](https://github.com/derhuerst/prompt-skeleton#prompts-using-prompt-skeleton).
 
 
 ## Installing
@@ -54,12 +55,15 @@ prompt('Which colors do you like?', colors, opts)
 
 ## Related
 
-- [`mail-prompt`](https://github.com/derhuerst/mail-prompt)
 - [`date-prompt`](https://github.com/derhuerst/date-prompt)
+- [`mail-prompt`](https://github.com/derhuerst/mail-prompt)
 - [`number-prompt`](https://github.com/derhuerst/number-prompt)
+- [`range-prompt`](https://github.com/derhuerst/range-prompt)
 - [`select-prompt`](https://github.com/derhuerst/select-prompt)
 - [`text-prompt`](https://github.com/derhuerst/text-prompt)
+- [`tree-select-prompt`](https://github.com/derhuerst/tree-select-prompt)
 - [`cli-autocomplete`](https://github.com/derhuerst/cli-autocomplete)
+- [`switch-prompt`](https://github.com/derhuerst/switch-prompt)
 
 
 ## Contributing
