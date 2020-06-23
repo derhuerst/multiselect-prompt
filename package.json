@@ -1,7 +1,7 @@
 {
 	"name": "multiselect-prompt",
 	"description": "A prompt to select zero or more items.",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"main": "index.js",
 	"files": [
 		"index.js"

@@ -1,6 +1,10 @@
 # multiselect-prompt
 
-**A prompt to select zero or more items.**
+**Deprecated. Use the [MultiSelect prompt](https://github.com/enquirer/enquirer#multiselect-prompt) from [`enquirer`](https://github.com/enquirer/enquirer).**
+
+---
+
+A prompt to select zero or more items.
 
 [![asciicast](https://asciinema.org/a/41496.png)](https://asciinema.org/a/41496)
 
